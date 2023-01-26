@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.card {
+
+  margin: 10px;
+  border: 5px solid #ccc;
+  float: center;
+  width: 250px;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.card button:hover {
+  opacity: 0.7;
+}
+</style>
+</head>
+<body>
+
+<h2 style="text-align:center">ITEAMS</h2>
+
+<form action="/products" , method="POST">
+
+<div class="card">
+
+  <h1>{{ productlist.name }}</h1>
+  <input type="hidden" id="lname" name='name' value={{ productlist.id }}>
+
+
+  <p class="price">
+    <label for="fname">Category:</label>
+
+  <input type="text" id="lname" name="category" value={{ productlist.category }}>
+
+      <p class="price">
+    <label for="fname">Paid_Amount:</label>
+
+  <input type="text" id="lname" name="paid_amount" value={{ productlist.paid_amount }}>
+
+  <p class="price">
+    <label for="fname">Remaning_Amount:</label>{{ productlist.remaning_amount }}
+
+  <p class="price">
+    <label for="fname">Total_Amount:</label>
+    <input type="text" id="lname" name="total_amount" value={{ productlist.total_amount }}>
+
+
+  <p><button>Submit</button></p>
+
+
+
+</div>
+
+</form>
+
+</body>
+</html>

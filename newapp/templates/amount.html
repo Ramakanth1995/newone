@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.glow {
+  font-size: 80px;
+  color: #fff;
+  text-align: center;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+  }
+
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+  }
+}
+
+
+
+
+body {
+  background-color: Iron Gray;
+  font-family: sans-serif;
+}
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button1 {background-color: #4CAF50;   float: center;} /* Green */
+.button2 {background-color: red;} /* Blue */
+.button3 {background-color: #008CBA;} /* Blue */
+
+
+.card {
+
+  margin: 10px;
+  border: 5px solid #ccc;
+  float: left;
+
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 5px;
+  color: red;
+  background-color: white;
+  text-align: left;
+  cursor: pointer;
+  font-size: 18px;
+  float: right;
+}
+
+.card button:hover {
+  opacity: 0.7;
+}
+</style>
+</head>
+<body>
+
+<h2 class="glow" style="text-align:center;font-size: 40px;color: #3b5998;font-family: Impact;">LIST OF ITEAMS</h2>
+
+<pre>
+<a href="{{ url_for( 'group_data' , table='Y' ) }}"><img src="{{url_for('static', filename='statistic.png')}}" alt="HTML tutorial" style="width:42px;height:42px;"></a>
+Statistics</pre>
+
+<button class="button button1" style="text-align:center; float: right;" >Total_Amount : {{ sum_of_total_price }}</button>
+
+<button class="button button2" style="text-align:center; float: right;" >Due_Amount : {{ balance_amount }}</button>
+
+{% for product in productlist %}
+
+<form action="/edit" , method="POST">
+
+<div class="card">
+<a href="{{ url_for( 'edit' , table='Y' ) }}"><img src="{{url_for('static', filename='delete.png')}}" alt="HTML tutorial" style="width:42px;height:30px;"></a>
+
+    <button class="button button2"><a href="#"><img title="facebook" alt="facebook" src="{{url_for('static', filename='edit.png')}}" width="30px"></a></button>
+
+{% if product.remaning_amount==0%}
+    <style>
+    .card {
+
+    border-color: green
+    }
+    </style>
+
+
+  <h1 style="text-align:center;color:green;">{{ product.name }}</h1>
+    {% elif product.remaning_amount>0%}
+      <h1 style="text-align:center;color:red;">{{ product.name }}</h1>
+     <style>
+    .card {
+
+     border-color: 	#8b9dc3 #3b5998 #dfe3ee ;
+  border-style: solid;
+    }
+    </style>
+    {% else %}:
+    <h1 style="text-align:center;color:#FFBF00;">{{ product.name }}</h1>
+
+
+    {% endif %}
+
+
+  <input type="hidden" id="lname" name=id value={{ product.id }}>
+
+  <input type="hidden" id="lname" name=name value={{ product.name }}>
+
+    <p class="price">
+
+    <label for="fname">Category:</label>{{ product.category }}</p>
+
+  <p class="price">
+
+    <label for="fname">Paid_Amount:</label>{{ product.paid_amount }}</p>
+  <input type="hidden" id="lname" name="paid_amount" value={{ product.paid_amount }}>
+  <p class="price">
+    <label for="fname">Remaning_Amount:</label>{{ product.remaning_amount }}</p>
+  <input type="hidden" id="lname" name="remaning_amount" value={{ product.remaning_amount }}>
+  <p class="price">
+    <label for="fname">Total_Amount:</label>{{ product.total_amount }}</p>
+    <input type="hidden" id="lname" name="total_amount" value={{ product.total_amount }}>
+
+
+</div>
+
+</form>
+
+
+ {% endfor %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<body>
+<canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+
+<script>
+var xValues = {{x}} ;
+var yValues = [7,8,8,9,9,9,10,11,14,14,15];
+
+new Chart("myChart", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      fill: false,
+      lineTension: 0,
+      backgroundColor: "rgba(0,0,255,1.0)",
+      borderColor: "rgba(0,0,255,0.1)",
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    scales: {
+      yAxes: [{ticks: {min: 6, max:16}}],
+    }
+  }
+});
+</script>
+
+</body>
+</html>
